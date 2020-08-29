@@ -20,7 +20,7 @@ module.exports.signup = (req, res, next) => {
   User.findOne({ email })
     .then(existingUser => {
       if (existingUser) {
-        return res.status(422).send( { error: 'Email is in user'})
+        return res.status(422).send({ error: 'Email is in use'})
       }
 
       const user = new User({
@@ -36,4 +36,9 @@ module.exports.signup = (req, res, next) => {
     })
     .catch(err => next(err))
 
+}
+
+module.exports.signin = (req, res, next) => {
+
+  res.send({ token: tokenForUser(req.user)})
 }
